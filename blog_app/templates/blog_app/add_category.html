@@ -1,0 +1,50 @@
+{% extends 'blog_app/base.html' %}
+
+
+{% block title %}
+Add new category
+{% endblock %}
+
+
+
+
+{% block content %}
+{% if user.is_authenticated %}
+<h2 class="h5 text-center mt-4 mb-2 py-2 border-info "> <span class="text-muted"></span></h2>
+
+
+<form method="POST" class="p-4 mt-2">
+    {% csrf_token%}
+
+    <div class="form-group">
+        {% if form.name.errors %}
+        {% for error in form.name.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+        <div class="text-info login-form"><b>Name Your Category</b></div>
+        <input type="text" name="name" class="form-control inputs" placeholder="enter a name for the new category" required>
+    </div>
+
+    <button class="btn btn-outline-info btn-block" type="submit">Add Category</button>
+    <button onClick="window.history.back();return false;" class="mt-2 text-decoration-none btn btn-block btn-dark ">Cancel</span></button>
+
+</form>
+
+<h2 class="h6 text-center mt-4 border-bottom py-2">Currently available categories</h2>
+
+<div class="py-2">
+{% for cat in menu %}
+    <a class="dropdown-item text-info " href="{% url 'filter' cat.name %}">{{ cat.name|title }}</a>
+{% endfor %}
+</div>
+
+{% else %}
+<div class="display-4 mt-4 alert alert-danger">Login Required</div>
+<div class="h4 mt-1">Please login to add categories.</div>
+
+{% endif %}
+
+
+
+{% endblock %}

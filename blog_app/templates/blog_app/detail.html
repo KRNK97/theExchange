@@ -1,0 +1,102 @@
+{% extends 'blog_app/base.html' %}
+
+{% block title %}
+{{ post.title }}
+{% endblock %}
+
+{% block content %}
+<h2 class="h6 text-sm-right text-center mt-4 author mx-2 text-muted">{{ post.author.username }}'s post</h2>
+
+    <div class="p-4 m-2 bg-light border border-info shadow rounded main-body">
+        <span class="h1 title2">{{ post.title|upper }}</span>
+        <span class="small ml-2 text-info">in <b><a href="{% url 'filter' post.category %}" class="text-decoration-none text-reset">[{{ post.category }}]</a></b></span>
+        <br>
+        <div class="my-1"></div>
+        </b></span>
+        by<span class="h5 text-info"> <a href="{% url 'filter_by' post.author.id %}" class="text-decoration-none text-reset">{{ post.author.username }}</a></span>
+        <span class="text-muted small d-block">{{ post.date | date}}</span>
+        <p class="h6 mt-2 border-top py-2 content text-justify">{{ post.content|safe }}
+            <br>
+        </p>
+
+
+        <div class="d-flex justify-content-center justify-content-sm-end p-2">
+        <button onClick="window.history.back();return false;" class="mt-2 text-decoration-none btn btn-outline-dark w-10 "><span class=""><i class="fas fa-chevron-left"></i></span></button>
+        
+        <!-- <a href="{% url 'home' %}" class="mt-2 text-decoration-none btn btn-outline-dark w-10 "><span class=""><i class="fas fa-chevron-left"></i></span></a> -->
+        
+        <form action="{% url 'post_like' post.pk %}" method="POST" class="m-0 p-0"  >
+            {% csrf_token %}
+            <button type="submit" class="btn btn-dark mt-2 w-10 mx-1" name="post_id" value="{{ post.id }}">
+
+                
+                {% if liked %}
+                    <span class="text-danger" id="like_btn"> <i class="fas fa-heart"></i></span>
+                {% else %} 
+                    <span class="text-light" id="like_btn"> <i class="fas fa-heart"></i></span>
+                {% endif %}
+
+                <span class="likes">Likes </span><span>{{ post.total_likes }}</span></button>
+        </form>
+    
+        
+        {% if post.author.username == user.username %}
+        <a href="{% url 'edit_post' post.pk %}" class="mt-2 text-decoration-none btn btn-outline-info w-10 "> <span class="" id="like_btn"> <i class="fas fa-edit"></i></span> <span class="btn-text">Edit</span></a>
+        
+        <a href="{% url 'delete_post' post.pk %}" class="mt-2 text-decoration-none btn btn-outline-danger w-10 mx-1"><span class="" id="like_btn"> <i class="far fa-trash-alt"></i></span> <span class="btn-text">Delete</span></a>
+        {% else %}
+        {% endif %}
+        </div>
+
+        {% if liked %}
+        <div class="lead text-muted small  mr-3 d-flex justify-content-sm-end justify-content-center">You like this post! <span class="text-danger h6 ml-1"><i class="fas fa-grin-hearts"></i></span></div>
+
+        {% else %}
+        <div class="lead text-muted small  mr-3 d-flex justify-content-sm-end justify-content-center"> <span class="ml-1 h6"><i class="fas fa-meh"></i></span></div>
+        {% endif %}
+
+
+        {% if user.is_authenticated %}
+        {% else %}
+        
+        <div class="text-right mx-1 px-2 my-0"><small>| Login to like & comment on posts |</small></div>
+        {% endif %}
+    </div>
+
+
+    {% if user.is_authenticated %}
+    <div class="px-2">
+    <a href="{% url 'comment' post.pk %}" class="btn btn-block  btn-outline-danger mt-4 "><i class="far fa-comment"></i> Add Comment</a>
+    </div>  
+    {% else %}
+    <div class="px-2">
+    <a href="{% url 'comment' post.pk %}" class="btn btn-block  btn-outline-danger mt-4 disabled">Add Comment <i class="fas fa-lock"></i></a>
+    </div>  
+    {% endif %}
+
+    <div class="h5 mt-4 p-0 pb-1 mx-2 mb-2 border-bottom">Comments [{{ post.comments.all|length }}]</div>
+    {% if post.comments.all %}
+
+    {% for comment in post.comments.all %}
+
+    <div class="comment m-2 bg-light px-2 py-2 shadow-sm  border-left border-info border-right ">
+
+        <div class="text-info d-inline"><b>{{ comment.name }}</b> <i class="far fa-comment"></i></div>
+        <span class="small p-0 ">{{ comment.date |date }}</span>
+        <p class="content p-0 mt-1">{{ comment.body }}</p>
+
+        {% if comment.name == user.username %}
+        <div class=""><a href="{% url 'del-comment' comment.pk  %}" class="btn-sm btn-danger text-decoration-none"><small><span class="" id="like_btn"></span> Delete</small></a></div>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    <br>
+    <br>
+    {% else %}
+    <p class="content p-0 m-2 ">No comments yet</p>
+    <br>
+    <br>
+    {% endif %}
+
+{% endblock %}

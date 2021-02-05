@@ -1,0 +1,105 @@
+{% extends 'blog_app/base.html' %}
+
+
+{% block title %}
+Add new post
+{% endblock %}
+
+
+
+
+{% block content %}
+{% if user.is_authenticated %}
+<h2 class="h5 text-center mt-4 mb-2 py-2 border-info "><span class="text-muted inputs">New Post</span></h2>
+
+{{ form.media }}
+<form method="POST" class="p-4   mt-2">
+    {% csrf_token%}
+
+    <div class="form-group">
+        {% if form.title.errors %}
+        {% for error in form.title.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+        <div class="text-info login-form">
+        <b>{{ form.title.label }}</b>
+        <input type="text" name="title" class="form-control inputs" placeholder="title of your post " required>
+        </div>
+    </div>
+    <div class="form-group">
+        {% if form.content.errors %}
+        {% for error in form.content.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+        <div class="text-info login-form">
+        <b class="d-block">{{ form.content.label }}</b>
+        <textarea name="content" id="content" cols="30" rows="10" class="form-control inputs border p-3  " placeholder="write your post here" required></textarea>
+        </div>
+        <!-- {{ form.content }} -->
+    </div>
+    <div class="form-group">
+        {% if form.category.errors %}
+        {% for error in form.category.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+        <div class="text-info login-form">
+        <b><label for="id_category">Category:</label></b>
+        {{ form.category }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {% if form.author.errors %}
+        {% for error in form.author.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+        <div class="text-info login-form">
+        <!-- <b>{{ form.content.label }}</b> -->
+        {{ form.author }}
+        </div>
+    </div>
+
+   
+
+
+    <button class="btn btn-outline-info btn-block" type="submit">Post</button>
+    <button onClick="window.history.back();return false;" class="mt-2 text-decoration-none btn btn-block btn-dark ">Cancel</span></button>
+</form>
+
+
+<!-- set author as the logged in users id -->
+<script>
+
+    let id = "{{ user.id }}";
+    document.getElementById('authorbox').value = id;
+
+</script>
+
+{% else %}
+<div class="d-flex justify-content-between border border shadow mt-4 p-4">
+    <div class="">
+        <div class="display-4 mt-2 text-danger">ERROR</div>
+        <div class="h4 mt-1">You can't access this page.</div>
+    </div>
+
+    <div class="mt-2">
+        <img src="https://www.flaticon.com/svg/vstatic/svg/1179/1179237.svg?token=exp=1611919698~hmac=345be6f0b33e4ef97d1494c0f07ebc6e" alt="" class="m-auto error_img">
+    </div>
+</div>
+
+
+{% endif %}
+
+
+<script>
+    CKEDITOR.replace('content');
+    CKEDITOR.config.width="100%";
+    CKEDITOR.config.height="400px"
+</script>
+
+
+{% endblock %}

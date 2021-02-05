@@ -1,0 +1,46 @@
+{% extends 'blog_app/base.html' %}
+
+
+{% block title %}
+Delete Comment
+{% endblock %}
+
+
+
+
+{% block content %}
+{% if comment.name == user.username %}
+<h2 class="h5 text-center mt-4 mb-2 py-2 border-info text-muted">Delete Comment</h2>
+
+
+<form method="POST" class="p-4 border bg-light shadow-sm mb-4">
+    {% csrf_token%}
+
+    <div class="form-group">
+        Comment <div class="h5 p-2 content">{{ comment.body }}</div>
+        <div class="alert alert-danger">
+            You are about to delete you comment, confirm?
+        </div>
+    </div>
+
+    <button class="btn btn-outline-danger btn-block" type="submit">Delete</button>
+    <button onClick="window.history.back();return false;" class="mt-2 text-decoration-none btn btn-block btn-dark ">Cancel</span></button>
+
+</form>
+{% else %}
+
+<div class="d-flex justify-content-between border border shadow mt-4 p-4">
+    <div class="">
+        <div class="display-4 mt-2 text-danger">ERROR</div>
+        <div class="h4 mt-1">You can't access this page.</div>
+    </div>
+
+    <div class="mt-2">
+        <img src="https://www.flaticon.com/svg/vstatic/svg/1179/1179237.svg?token=exp=1611919698~hmac=345be6f0b33e4ef97d1494c0f07ebc6e" alt="" class="m-auto error_img">
+    </div>
+</div>
+
+
+{% endif %}
+
+{% endblock %}

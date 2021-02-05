@@ -1,0 +1,116 @@
+{% extends 'blog_app/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Edit Account
+{% endblock %}
+
+
+
+
+{% block content %}
+
+{% if request.user != user %}
+
+<div class="d-flex justify-content-between border border shadow mt-4 p-4">
+    <div class="">
+        <div class="display-4 mt-2 text-danger">ERROR</div>
+        <div class="h4 mt-1">You can't access this page.</div>
+        <div class="small text-muted">Please go to 
+            <a href="{% url 'home' %}" class="text-decoration-none text-info"><b class="h6 title ">HOME</b>
+            </a>
+        </div>
+    </div>
+
+    <div class="mt-2">
+        <img src="https://www.flaticon.com/svg/vstatic/svg/1179/1179237.svg?token=exp=1611919698~hmac=345be6f0b33e4ef97d1494c0f07ebc6e" alt="" class="m-auto error_img">
+    </div>
+</div>
+
+{% else %}
+<h2 class="h5 text-center mt-4 mb-2  py-2 border-info "> <span class="text-muted">My Account</span></h2>
+
+
+<div class="d-flex flex-column mx-4">
+    <div class="h6 w-100 bg-light text-muted p-2">username - <span class="text-info  account-detail">{{ user.username }}</span></div>
+
+    <div class="h6 w-100 bg-light text-muted p-2">first name - <span class="text-info account-detail">{{ user.first_name }}</span></div>
+
+    <div class="h6 w-100 bg-light text-muted p-2">last name  - <span class="text-info account-detail">{{ user.last_name }}</span></div>
+
+    <div class="h6 w-100 bg-light text-muted p-2">email  - <span class="text-info  account-detail">{{ user.email }}</span></div>
+
+    <div class="h6 w-100 bg-light text-muted p-2">my posts  - <span class="text-info  account-detail"><a href="{% url 'filter_by' request.user.id %}" class="text-decoration-none  btn btn-outline-info btn-sm"><b>View Posts</b></span></a></div>
+</div>
+
+<div class="mt-4 mx-4 px-2 text-center  text-muted"> --- EDIT  ACCOUNT --- </div>
+
+<form method="POST" class="p-4 mb-4 ">
+    {% csrf_token%}
+ 
+
+    <div class="form-group">
+        {% if form.username.errors %}
+        {% for error in form.username.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+        <div class="text-info login-form"><b>{{ form.username.label | title }}</b></div>
+        {{ form.username }}
+    </div>
+
+    <div class="form-group">
+        {% if form.first_name.errors %}
+        {% for error in form.first_name.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+        <div class="text-info login-form"><b>{{ form.first_name.label | title }}</b></div>
+        {{ form.first_name }}
+    </div>
+
+    <div class="form-group">
+        {% if form.last_name.errors %}
+        {% for error in form.last_name.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+        <div class="text-info login-form"><b>{{ form.last_name.label | title }}</b></div>
+        {{ form.last_name }}
+    </div>
+
+    <div class="form-group">
+        {% if form.email.errors %}
+        {% for error in form.email.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+        <div class="text-info login-form"><b>{{ form.email.label | title }}</b></div>
+        {{ form.email }}
+    </div>
+
+    <div class="form-group  ">
+        {% if form.password.errors %}
+        {% for error in form.password.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+        <div class="text-info login-form"><b>{{ form.password.label | title }}</b></div>
+        
+        <div class="border border-info p-3  text-center bg-light">
+        <a href="{% url 'password' %}" class="text-decoration-none btn btn-outline-danger btn-sm">Click Here To Change Password</a>
+        </div>
+    </div>
+
+    <button class="btn btn-info btn-block" type="submit">Update Account</button>
+    <button onClick="window.history.back();return false;" class="mt-2 text-decoration-none btn btn-block btn-dark ">Back</span></button>
+
+
+    <!-- <div class="mt-4 text-muted small">Already Registered ? <a href="{% url 'login' %}" class="text-decoration-none text-info"><b>Login</b></a></div> -->
+
+</form>
+{% endif %}
+
+
+
+{% endblock %}

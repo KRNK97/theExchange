@@ -1,0 +1,233 @@
+p.content {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  font-family: "Lato", sans-serif;
+  line-height: 1rem;
+}
+
+.content {
+  font-family: "Lato", sans-serif;
+}
+
+.body {
+  background-color: brown;
+}
+
+* {
+  font-family: "Roboto", sans-serif;
+}
+.title {
+  font-family: "Roboto", sans-serif;
+  font-weight: bolder;
+  line-height: 1;
+  font-size: 1.3rem;
+}
+
+.title2 {
+  font-family: "Roboto", sans-serif;
+  font-weight: bolder;
+  font-size: 3rem;
+  line-height: 1;
+}
+
+span#like_btn {
+}
+
+span#like_btn :hover {
+  transform: scale(1.2);
+  transition: transform 0.2s;
+}
+
+.account-detail {
+  font-family: "Roboto", sans-serif;
+  /* font-size: 1.2rem; */
+  font-weight: 700;
+}
+
+img.error_img {
+  width: 100px;
+  height: 100px;
+}
+
+img.illus-login {
+  /* margin: auto; */
+  width: 50%;
+}
+img.illus-register {
+  /* margin: auto; */
+  width: 50%;
+  /* height: 700px; */
+}
+
+img.logo {
+  width: 25px;
+  height: 25px;
+}
+img.logo2 {
+  width: 55px;
+  height: 55px;
+}
+img.logo-big {
+  width: 120px;
+  height: 120px;
+}
+
+.small-name {
+  font-size: 1rem;
+}
+
+.login-form {
+  font-size: 1.5rem;
+}
+
+input.inputs {
+  border: none;
+  border-bottom: 1px solid rgb(240, 240, 240);
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  line-height: 1;
+  font-size: 1.2rem;
+}
+
+textarea.inputs {
+  border: none;
+  border-bottom: 1px solid rgb(240, 240, 240);
+  font-family: "Lato", sans-serif;
+  font-weight: 500;
+  line-height: 1;
+  font-size: 1.2rem;
+}
+
+input.inputs:focus {
+  outline: none;
+  border-color: transparent;
+}
+
+.forms-container {
+  display: flex;
+  align-items: center;
+}
+
+form.form {
+  width: 50%;
+  margin-top: 4rem;
+}
+
+h2.author {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  min-width: 100%;
+  text-align: center;
+}
+
+.links-footer {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+a.links i {
+  font-size: 1.2rem;
+  margin: 0.5rem;
+  transition: transform 0.3s;
+}
+
+.footer {
+  position: fixed;
+  border: 0;
+  left: 0;
+}
+
+a.links i:hover {
+  /* font-size: 20px; */
+  /* margin: 0 10px; */
+  /* padding: 15px; */
+  transform: translateY(-5px);
+}
+
+.main-body {
+  /* width: fit-content; */
+}
+
+@media (max-width: 726px) {
+  img.illus-login {
+    /* margin: auto; */
+    width: 100%;
+  }
+  img.illus-register {
+    /* margin: auto; */
+    width: 100%;
+  }
+
+  .forms-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  form.form {
+    width: 100%;
+  }
+
+  span.account-detail {
+    font-family: "Roboto", sans-serif;
+    font-size: 1rem;
+  }
+
+  .footer {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    min-width: 100%;
+    text-align: center;
+  }
+
+  span.likes {
+    display: none;
+  }
+
+  span.btn-text {
+    /* display: none; */
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+  .title {
+    font-family: "Roboto", sans-serif;
+    font-weight: bolder;
+    font-size: 1.4rem;
+    /* display: block; */
+    /* width: 100%; */
+  }
+
+  .title-main {
+    font-family: "Roboto", sans-serif;
+    font-weight: bolder;
+    font-size: 2rem;
+    display: block;
+    width: 100%;
+  }
+
+  .title2 {
+    font-family: "Roboto", sans-serif;
+    font-weight: bolder;
+    font-size: 2.2rem;
+  }
+
+  .navbar-custom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+
+  a.navbar-links {
+  }
+}

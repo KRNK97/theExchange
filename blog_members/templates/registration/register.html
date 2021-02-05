@@ -1,0 +1,115 @@
+{% extends 'blog_app/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Register
+{% endblock %}
+
+
+
+
+{% block content %}
+<!-- <h2 class="h4 text-center mt-4 border-bottom py-1"> <span class="text-muted">REGISTER</span></h2> -->
+
+<div class="forms-container mt-4">
+
+
+
+<img src="{% static 'blog_app/register.png' %}" alt="" class="illus-register">
+
+
+<form method="POST" class="p-4 mb-4 mt-0 form">
+    {% csrf_token%}
+    <!-- <legend class="small border-bottom py-0 mb-4 text-muted">Enter your information to Register</legend> -->
+
+    <div class="form-group">
+        {% if form.username.errors %}
+        {% for error in form.username.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+        <div class="text-info login-form"><b>{{ form.username.label | title }}</b></div>
+        <input type="text" name="username" class="form-control inputs" placeholder="enter your desired username" required>
+    </div>
+
+    <div class="form-group">
+        {% if form.first_name.errors %}
+        {% for error in form.first_name.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+        <div class="text-info login-form"><b>{{ form.first_name.label | title }}</b></div>
+        <input type="text" name="first_name" class="form-control inputs" placeholder="enter your first name" required>
+    </div>
+
+    <div class="form-group">
+        {% if form.last_name.errors %}
+        {% for error in form.last_name.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+        <div class="text-info login-form"><b>{{ form.last_name.label | title }}</b></div>
+        <input type="text" name="last_name" class="form-control inputs" placeholder="enter your last name" required>
+    </div>
+
+    <div class="form-group">
+        {% if form.email.errors %}
+        {% for error in form.email.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+        <div class="text-info login-form"><b>{{ form.email.label | title }}</b></div>
+        <input type="email" name="email" class="form-control inputs" placeholder="enter your email address" required>
+    </div>
+
+    <div class="form-group">
+        {% if form.password1.errors %}
+        {% for error in form.password1.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+        <div class="text-info login-form">
+        <b>{{ form.password1.label }}</b>
+        <input type="password" name="password1" class="form-control inputs" placeholder="create a strong password" required>
+        </div>
+    </div>
+
+    <div class="form-group">
+        {% if form.password2.errors %}
+        {% for error in form.password2.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+        <div class="text-info login-form">
+        <b>{{ form.password2.label }}</b>
+        <input type="password" name="password2" class="form-control inputs" placeholder="confirm your password" required>
+        </div>
+    </div>
+
+    
+    
+
+    <button class="btn btn-outline-info btn-block" type="submit">Register</button>
+
+
+
+    <div class="mt-4 text-muted small">Already Registered ? <a href="{% url 'login' %}" class="text-decoration-none text-info"><b>Login</b></a></div>
+
+</form>
+
+
+
+</div>
+
+<div class="footer small">
+    <a href="{% url 'home' %}" class="text-decoration-none text-secondary d-flex justify-content-center align-items-baseline "><b class="title small-name">The EXCHANGE</b><img src="{% static 'blog_app/logo.png' %}" alt="" class="logo">
+    </a>
+    <p class="content text-muted p-0">A blogging website based on the django web framework, developed as a personal project.
+    </p>
+   
+</div>
+
+
+
+{% endblock %}

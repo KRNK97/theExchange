@@ -1,0 +1,77 @@
+{% extends 'blog_app/base.html' %}
+{% load static %}
+
+
+{% block title %}
+{{ category }} 
+{% endblock %}
+
+
+
+{% block content %}
+<h2 class="h6 text-center mt-4 mb-2  py-4">All Posts in <span class="text-info"><b>{{ category }}</b></span>  <span class="text-info ">[{{ total }}]</span></h2>
+
+<button onClick="window.history.back();return false;" class="mt-0 text-decoration-none btn btn-outline-dark w-10 back "><span class=""><i class="fas fa-chevron-left"></i></span></button>
+
+
+
+{% if posts %}
+
+{% for post in posts %}
+
+<div class="p-4 my-2 bg-light border shadow-sm rounded">
+    <a href="{% url 'detail' post.pk %}" class = "text-decoration-none"><span class="text-dark title">{{ post.title|upper }}</span></a><span class="small ml-2 text-info">in <b><a href="{% url 'filter' post.category %}" class="text-decoration-none text-reset">[{{ post.category }}]</a></b></span>
+    <br>
+    by<span class="h5 text-info"> <a href="{% url 'filter_by' post.author.id %}" class="text-decoration-none text-reset">{{ post.author.username }}</a></span>
+    <span class="text-muted small d-block">{{ post.date | date}}</span>
+    <p class="mt-4 border-top py-1 text-secondary content">{{ post.content|slice:"200" }}...</p>
+
+    <div class="d-flex justify-content-between align-items-center">
+
+    <span class="mt-2 w-10 mx-1 px-2 bg-light rounded text-info" name="post_id" id="like_btn" value="{{ post.id }}">Likes <b>{{ post.total_likes }}</b><span class="text-danger"> <i class="fas fa-heart"></i></span></span>
+
+    <a href="{% url 'detail' post.pk %}" class = "text-decoration-none text-info small">Read More</a>
+    </div>
+</div>
+
+{% endfor %}  
+
+<ul class="pagination m-2 ">
+    {% if posts.has_previous %}
+    <li class="page-item text-info">
+        <a href="?page={{ posts.previous_page_number }}" class="text-reset text-decoration-none page-link"><i class="fas fa-angle-right"></i></a>
+    </li>
+    {% endif %}
+
+    {% for p in posts.paginator.page_range %}
+        {% if posts.number == p %}
+            <li class="page-item bg-info text-light">
+                <a href="?page={{ p }}" class="text-reset text-decoration-none page-link bg-info">{{p}}</a>
+            </li>
+        {% else %}
+        <li class="page-item text-info">
+            <a href="?page={{ p }}" class="text-reset text-decoration-none page-link">{{p}}</a>
+        </li>
+        {% endif %}
+    {% endfor %}
+
+    {% if posts.has_next %}
+    <li class="page-item text-info">
+        <a href="?page={{ posts.next_page_number }}" class="text-reset text-decoration-none page-link"><i class="fas fa-angle-right"></i></a>
+    </li>
+    {% endif %}
+</ul>
+
+
+
+{% else %}
+<div class="text-muted mt-4 mb-0 p-1 text-center">Umm, There are no Posts to display. . .</div>
+    <!-- <span class="p-2">Start by <a href="{% url 'add_post' %}" class="text-decoration-none text-info text-center"><b>Writing One</b></a></span> -->
+
+{% endif %}
+
+
+<br>
+<br>
+
+{% endblock %}

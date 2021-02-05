@@ -1,0 +1,138 @@
+{% extends 'blog_app/base.html' %}
+{% load static %}
+
+{% block title %}
+Django Blog 
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="row mt-2">
+
+<div class="col-sm-12 col-md-8 col-lg-10">
+<h2 class="h6 text-center mt-4">Home
+    
+</h2>
+
+{% if object_list %}
+
+{% for post in object_list %}
+
+<div class="p-4 my-2 bg-light border shadow-sm rounded">
+    <a href="{% url 'detail' post.pk %}" class = "text-decoration-none"><span class="text-dark title">{{ post.title|upper }}</span></a><span class="small ml-2 text-info">in <b><a href="{% url 'filter' post.category %}" class="text-decoration-none text-reset">[{{ post.category }}]</a></b></span>
+    <br>
+    <div class="my-1"></div>
+    by<span class="h5 text-info"> <a href="{% url 'filter_by' post.author.id %}" class="text-decoration-none text-reset">{{ post.author.username }}</a></span>
+    <span class="text-muted small d-block">{{ post.date | date}}</span>
+    <p class="mt-2 border-top py-1 text-secondary content">{{ post.content|striptags|slice:"200" }}...</p>
+
+    <div class="d-flex justify-content-between align-items-center">
+
+    <span class="mt-2 w-10 mx-1 px-2 bg-light rounded text-info" name="post_id" id="like_btn" value="{{ post.id }}"> <b>{{ post.total_likes }}</b>
+        <span class="text-danger">
+            <i class="fas fa-heart"></i>
+        </span>
+         <b>{{ post.comments.all|length }}</b>
+        <span class="text-danger">
+            <i class="far fa-comment"></i>
+        </span>
+    </span>
+    
+
+    <a href="{% url 'detail' post.pk %}" class = "text-decoration-none text-info small">Read More</a>
+    </div>
+</div>
+
+{% endfor %}
+
+<!-- pagination -->
+{% if is_paginated %}
+<ul class="pagination m-2 ">  
+
+    {% if page_obj.has_previous %}
+    <li class="page-item text-info">
+    <a href="?page=1" class="text-reset text-decoration-none page-link"><i class="fas fa-angle-double-left"></i></a>
+    </li>
+    <li class="page-item text-info">
+    <a href="?page={{ page_obj.previous_page_number }}" class="text-reset text-decoration-none page-link"><i class="fas fa-angle-left"></i></a>
+    </li>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+        <li class="page-item bg-info text-light ">
+        <a href="?page={{ num }}" class="text-reset text-decoration-none page-link bg-info">{{ num }}</a></li>
+
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+        <li class="page-item text-info ">
+        <a href="?page={{ num }}" class="text-reset text-decoration-none page-link">{{ num }}</a></li>
+        {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+    <li class="page-item bg-info text-info">
+    <a href="?page={{ page_obj.next_page_number }}" class="text-reset text-decoration-none page-link"><i class="fas fa-angle-right"></i></a></li>
+    
+    <li class="page-item text-info">
+    <a href="?page={{ page_obj.paginator.num_pages }}" class="text-reset text-decoration-none page-link"><i class="fas fa-angle-double-right"></i></a></li>
+
+    {% endif %}
+
+</ul>  
+
+{% endif %}
+
+<br>
+<br>
+
+
+<div class="d-flex justify-content-sm-center justify-content-around mt-2 bg-light">
+    <a href="https://www.linkedin.com/in/krnk97/" class='text-decoration-none  links' target="_blank" ><i class="fab fa-linkedin-in text-info "></i></a>
+
+    <a href="https://github.com/KRNK97" class='text-decoration-none links' target="_blank" ><i class="fab fa-github text-info"></i></a>
+
+    <a href="https://www.instagram.com/_krnk97/" class='text-decoration-none links' target="_blank" ><i class="fab fa-instagram text-info"></i></a>
+</div>
+
+{% else %}
+
+    <div class="text-muted mt-4 mb-0 p-1">Hey! There are no Posts currently . . . </div>
+    <span class="p-1 ">Start by <a href="{% url 'add_post' %}" class="text-decoration-none text-info text-center"><b>Writing One</b></a></span>
+    
+
+    <div class="d-flex justify-content-sm-center justify-content-around mt-4 border footer">
+        <a href="https://www.linkedin.com/in/krnk97/" class='text-decoration-none  links' target="_blank" ><i class="fab fa-linkedin-in text-info"></i></a>
+    
+        <a href="https://github.com/KRNK97" class='text-decoration-none links' target="_blank" ><i class="fab fa-github text-info"></i></a>
+    
+        <a href="https://www.instagram.com/_krnk97/" class='text-decoration-none links' target="_blank" ><i class="fab fa-instagram text-info"></i></a>
+    </div>
+{% endif %}
+</div>
+
+<div class="col-sm-12 col-md-4 col-lg-2">
+
+    <h2 class="h6 text-center mt-4 border-bottom py-1">Categories</h2>
+    
+    <div class=" ">
+    <!-- {% for cat in menu %}
+        <a class="dropdown-item text-info " href="{% url 'filter' cat.name %}">{{ cat.name|title }}</a>
+    {% endfor %} -->
+
+    {% for cat in menu|slice:"10" %}
+        <a class="dropdown-item text-info " href="{% url 'filter' cat.name %}">{{ cat.name|title }}</a>
+    {% endfor %}
+    <div class="text-muted small pl-4">To view all categories, click on the Categories button on the navbar.</div>
+    </div>
+    
+
+</div>
+</div>
+
+
+
+
+
+{% endblock %}

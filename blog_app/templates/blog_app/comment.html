@@ -1,0 +1,59 @@
+{% extends 'blog_app/base.html' %}
+
+{% block title %}
+Add comment
+{% endblock %}
+
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<h2 class="h5 text-center mt-4 mb-2 py-2 border-info text-muted"></h2>
+    
+    <div class="d-flex justify-content-between">
+        <div class="text-muted small"></div>
+        <div class="text-info title">{{ post.title }}</div>
+    </div>
+    <div class="d-flex justify-content-between">
+        <div class="text-muted small">Posting comment</div>
+        <div class="small text-muted">by {{ post.author }}</div>
+    </div>
+    
+   
+
+
+<form method="POST" class="p-0 mt-2 ">
+    {% csrf_token%}
+
+    <div class="form-group border">
+        {% if form.body.errors %}
+        {% for error in form.body.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+        <div class="text-info login-form">
+        <textarea name="body" id="body" cols="30" rows="10" class="form-control inputs p-3 rounded shadow-sm" placeholder="write your comment here" required></textarea>
+        </div>
+    </div>
+
+    <button class="btn btn-outline-info btn-block" type="submit">Post Comment</button>
+    <button onClick="window.history.back();return false;" class="mt-2 text-decoration-none btn btn-block btn-dark ">Cancel</span></button>
+</form>
+
+
+{% else %}
+<div class="d-flex justify-content-between border border shadow mt-4 p-4">
+    <div class="">
+        <div class="display-4 mt-2 text-danger">ERROR</div>
+        <div class="h4 mt-1">You can't access this page.</div>
+    </div>
+
+    <div class="mt-2">
+        <img src="https://www.flaticon.com/svg/vstatic/svg/1179/1179237.svg?token=exp=1611919698~hmac=345be6f0b33e4ef97d1494c0f07ebc6e" alt="" class="m-auto error_img">
+    </div>
+</div>
+
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'blog_app/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+Login
+{% endblock %}
+
+
+
+
+{% block content %}
+
+
+<!-- <h2 class="h4 text-center mt-4 border-bottom py-1"> <span class="text-muted">LOGIN</span></h2> -->
+
+
+
+<div class="forms-container mt-4 ">
+
+
+    
+<img src="{% static 'blog_app/login.png' %}" alt="" class="illus-login">
+
+<form method="POST" class="p-4 mb-4 mt-2 form">
+    {% csrf_token%}
+    <!-- <legend class="small border-bottom py-0 mb-4 text-muted">Enter your credentials to Login.</legend> -->
+
+    {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+      {% endif %}
+
+    <div class="form-group">
+        <div class="text-info  login-form">
+        <b>{{ form.username.label |title }}</b>
+            <input type="text" name="username" class="form-control inputs" placeholder="username" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="text-info login-form">
+        <b>{{ form.password.label |title }}</b>
+            <input type="password" name="password" class="form-control inputs" placeholder="password" required>
+        </div>
+    </div>
+
+
+    
+
+    <button class="btn btn-outline-info btn-block mt-4" type="submit">Login</button>
+
+    <div class="mt-4 text-muted small">Need an account? <a href="{% url 'register' %}" class="text-decoration-none text-info"><b>Sign Up</b></a></div>
+
+</form>
+</div>
+
+
+
+<div class="footer small">
+    <a href="{% url 'home' %}" class="text-decoration-none text-secondary d-flex justify-content-center align-items-baseline "><b class="title small-name">The EXCHANGE</b><img src="{% static 'blog_app/logo.png' %}" alt="" class="logo">
+    </a>
+    <p class="content text-muted p-0">A blogging website based on the django web framework, developed as a personal project.
+    </p>
+   
+</div>
+
+
+{% endblock %}

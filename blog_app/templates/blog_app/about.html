@@ -1,0 +1,34 @@
+{% extends 'blog_app/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+The Exchange | About 
+{% endblock %}
+
+{% block content %}
+
+
+<div class="m-4 d-flex flex-column align-items-center rounded">
+    <img src="{% static 'blog_app/logo.png' %}" alt="" class="logo-big text-center">
+    <a href="{% url 'home' %}" class="text-decoration-none text-secondary d-flex justify-content-center align-items-baseline "><b class="title display-4 ">The EXCHANGE</b>
+    </a>
+    <p class="lead content text-muted p-3 mt-2 text-justify bg-light">A blogging website based on the django web framework, developed as a personal project. The blog features user registeration & authentication, user account editing, post crud, likes & comments. 
+    </p>
+
+    <p class="lead content text-muted p-3 m-0 text-justify border-bottom">As this application has been developed by a single person, there might be some bugs & missing features like image uploading. Some features have not been added for developer's convenience as they required a lot more time & tools.
+    </p>
+    
+   
+</div>
+
+<div class="d-flex justify-content-sm-center justify-content-around  mb-2 mt-2 ">
+    <a href="https://www.linkedin.com/in/krnk97/" class='text-decoration-none  links' target="_blank" ><i class="fab fa-linkedin-in text-info"></i></a>
+
+    <a href="https://github.com/KRNK97" class='text-decoration-none links' target="_blank" ><i class="fab fa-github text-info"></i></a>
+
+    <a href="https://www.instagram.com/_krnk97/" class='text-decoration-none links' target="_blank" ><i class="fab fa-instagram text-info"></i></a>
+</div>
+
+
+{% endblock %}
