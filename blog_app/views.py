@@ -1,10 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect, Http404
-from .models import Post, Comment
-# from .models import Category
+from .models import Post, Category, Comment
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import User
-from .forms import PostForm
-# from.forms import CategoryForm
+from .forms import PostForm, CategoryForm
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -27,14 +25,18 @@ class HomeView(ListView):                   # view to use
     ordering = ['-date']
     paginate_by = 5
 
-    # removed data
-    # def get_context_data(self, *args, **kwargs):
-    #     menu_items = Category.objects.all().values
-    #     context = super(HomeView, self).get_context_data(*args, **kwargs)
-    #     context["menu"] = menu_items
+    # code to pass categories as context to the home view so they appear in nav bar
+    # for class based views we need to define context this way
+    def get_context_data(self, *args, **kwargs):
+        menu_items = Category.objects.all().values
+        context = super(HomeView, self).get_context_data(*args, **kwargs)
+        context["menu"] = menu_items
 
-    #     # print(context)
-    #     return context
+        # print(context)
+        return context
+
+# detailed view of individual posts
+# this view will automatically get the post with the pk that was passed with the url pattern
 
 
 class PostDetailView(DetailView):
@@ -88,46 +90,49 @@ class DeletePostView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
         messages.success(self.request, self.success_message % obj.__dict__)
         return super(DeletePostView, self).delete(request, *args, **kwargs)
 
-# removed data
-# class AddCategoryView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
-#     model = Category
-#     template_name = 'blog_app/add_category.html'
-#     form_class = CategoryForm
-#     success_message = "Category added!"
+
+class AddCategoryView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+    model = Category
+    template_name = 'blog_app/add_category.html'
+    form_class = CategoryForm
+    success_message = "Category added!"
+    # put all fields from model on the page
+    # fields = '__all__'
+
+    # pass categories to view
+
+    def get_context_data(self, *args, **kwargs):
+        menu_items = Category.objects.all().values
+        context = super(AddCategoryView, self).get_context_data(
+            *args, **kwargs)
+        context["menu"] = menu_items
+
+        # print(context)
+        return context
 
 
-#     def get_context_data(self, *args, **kwargs):
-#         menu_items = Category.objects.all().values
-#         context = super(AddCategoryView, self).get_context_data(
-#             *args, **kwargs)
-#         context["menu"] = menu_items
+def FilterView(request, cat):
+    filtered_posts = Post.objects.filter(category=cat).all().order_by('-date')
+    total = len(filtered_posts.values_list())
 
-#         # print(context)
-#         return context
+    page = request.GET.get('page', 1)
 
+    paginator = Paginator(filtered_posts, 5)
 
-# def FilterView(request, cat):
-#     filtered_posts = Post.objects.filter(category=cat).all().order_by('-date')
-#     total = len(filtered_posts.values_list())
+    try:
+        filtered_posts = paginator.page(page)
+    except PageNotAnInteger:
+        filtered_posts = paginator.page(1)
+    except EmptyPage:
+        filtered_posts = paginator.page(paginator.num_pages)
 
-#     page = request.GET.get('page', 1)
+    context = {
+        'category': cat,
+        'posts': filtered_posts,
+        'total': total
+    }
 
-#     paginator = Paginator(filtered_posts, 5)
-
-#     try:
-#         filtered_posts = paginator.page(page)
-#     except PageNotAnInteger:
-#         filtered_posts = paginator.page(1)
-#     except EmptyPage:
-#         filtered_posts = paginator.page(paginator.num_pages)
-
-#     context = {
-#         'category': cat,
-#         'posts': filtered_posts,
-#         'total': total
-#     }
-
-#     return render(request, 'blog_app/filtered.html', context)
+    return render(request, 'blog_app/filtered.html', context)
 
 
 def FilterAuthorView(request, id):
@@ -177,43 +182,43 @@ def LikeView(request, pk):
 
     return redirect('detail', post.pk)
 
-# removed data
-# @login_required
-# def CommentView(request, pk):
-#     post = get_object_or_404(Post, id=pk)
 
-#     if request.method == 'POST':
-#         print(request.POST)
+@login_required
+def CommentView(request, pk):
+    post = get_object_or_404(Post, id=pk)
 
-#         c = Comment.objects.create(post_id=pk, name=get_current_user(
-#         ), body=request.POST.get('body'))
+    if request.method == 'POST':
+        print(request.POST)
 
-#         post.comments.add(c)
+        c = Comment.objects.create(post_id=pk, name=get_current_user(
+        ), body=request.POST.get('body'))
 
-#         return redirect('detail', post.pk)
+        post.comments.add(c)
 
-#     context = {
-#         "form": CommentForm,
-#         "post": post
-#     }
+        return redirect('detail', post.pk)
 
-#     return render(request, 'blog_app/comment.html', context)
+    context = {
+        "form": CommentForm,
+        "post": post
+    }
+
+    return render(request, 'blog_app/comment.html', context)
 
 
-# class DeleteCommentView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
-#     model = Comment
-#     template_name = 'blog_app/delete_comment.html'
-#     success_message = "Comment deleted!"
+class DeleteCommentView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
+    model = Comment
+    template_name = 'blog_app/delete_comment.html'
+    success_message = "Comment deleted!"
 
-#     # redirect after a post is deleted
-#     def get_success_url(self):
-#         return reverse('home')
+    # redirect after a post is deleted
+    def get_success_url(self):
+        return reverse('home')
 
-#     # for success message in delete view we do this -->
-#     def delete(self, request, *args, **kwargs):
-#         obj = self.get_object()
-#         messages.success(self.request, self.success_message % obj.__dict__)
-#         return super(DeleteCommentView, self).delete(request, *args, **kwargs)
+    # for success message in delete view we do this -->
+    def delete(self, request, *args, **kwargs):
+        obj = self.get_object()
+        messages.success(self.request, self.success_message % obj.__dict__)
+        return super(DeleteCommentView, self).delete(request, *args, **kwargs)
 
 
 def aboutView(request):

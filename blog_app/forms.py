@@ -1,12 +1,18 @@
+from djrichtextfield.widgets import RichTextWidget
+from django.forms import ValidationError
+from django.contrib.auth.models import User
 from django import forms
 from .models import Post, Comment
-# from.models import Category
-from django.contrib.auth.models import User
-from django.forms import ValidationError
-from djrichtextfield.widgets import RichTextWidget
+from.models import Category
 
+# if we want to hard code categories into select field we can just do so by passing in python list
+# (choice name, choice value)
+# choices = [('Programming', 'Programming'),
+#            ('Gaming', 'Gaming'), ('Sports', 'Sports')]
 
-# choices = Category.objects.all().values_list('name', 'name')
+# better way is to get categories from the Category model
+
+choices = Category.objects.all().values_list('name', 'name')
 
 
 class PostForm(forms.ModelForm):
@@ -22,29 +28,29 @@ class PostForm(forms.ModelForm):
 
             'author': forms.TextInput(attrs={'class': 'form-control', 'id': 'authorbox', "type": "hidden", "value": ""}),
 
-            # 'category': forms.Select(choices=choices, attrs={'class': 'form-control'})
+            'category': forms.Select(choices=choices, attrs={'class': 'form-control'})
         }
 
 
-# class CategoryForm(forms.ModelForm):
+class CategoryForm(forms.ModelForm):
 
-#     class Meta:
-#         model = Category
-#         fields = ['name']
+    class Meta:
+        model = Category
+        fields = ['name']
 
-#         widgets = {
-#             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'enter any new category'}),
-#         }
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'enter any new category'}),
+        }
 
-#     def clean_name(self):
-#         entered_cat = self.cleaned_data.get('name').capitalize()
+    def clean_name(self):
+        entered_cat = self.cleaned_data.get('name').capitalize()
 
-#         category = Category.objects.filter(name=entered_cat)
+        category = Category.objects.filter(name=entered_cat)
 
-#         if category:
-#             raise ValidationError("Category already exists!")
-#         else:
-#             return entered_cat.capitalize()
+        if category:
+            raise ValidationError("Category already exists!")
+        else:
+            return entered_cat.capitalize()
 
 
 class CommentForm(forms.ModelForm):
