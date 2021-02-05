@@ -22,7 +22,7 @@
     <br>
     by<span class="h5 text-info"> {{ post.author.username }}</span>
     <span class="text-muted small d-block">{{ post.date | date}}</span>
-    <p class="mt-4 border-top py-1 text-secondary content">{{ post.content|slice:"200" }}...</p>
+    <p class="mt-4 border-top py-1 text-secondary content">{{ post.content|striptags|slice:"200" }}...</p>
     
     <div class="d-flex justify-content-between align-items-center">
 
