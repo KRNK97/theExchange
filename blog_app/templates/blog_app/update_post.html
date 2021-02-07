@@ -37,8 +37,8 @@ Add new post
         {% endif %}
         <div class="text-info login-form">
         <b class="d-block">{{ form.content.label }}</b>
-        <small>There is an issue with ckeditor on mobile devices. Text selection isn't possible on mobile. The editor works fine on other devices.</small>
-        
+        <small class="text-reset small text-muted">There is an issue with ckeditor on mobile devices. Text selection isn't possible on mobile. The editor works fine on other devices.</small>
+
         <textarea name="content" id="content" cols="30" rows="10" class="form-control inputs border p-3 richtext " placeholder="update post" required>{{form.content.value}}</textarea>
         <!-- {{ form.content }} -->
         </div>
