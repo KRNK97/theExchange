@@ -155,6 +155,11 @@ a.links i:hover {
   /* width: fit-content; */
 }
 
+.info {
+  font-size: 0.7rem;
+  line-height: 0.6;
+}
+
 @media (max-width: 726px) {
   img.illus-login {
     /* margin: auto; */
