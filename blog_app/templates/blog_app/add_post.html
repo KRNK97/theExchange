@@ -35,7 +35,9 @@ Add new post
         {% endif %}
         <div class="text-info login-form">
         <b class="d-block">{{ form.content.label }}</b>
-        <p class="info text-muted">There is an issue with ckeditor on mobile devices. Text selection isn't possible on mobile. The editor works fine on other devices.</p>
+        <p class="info text-muted">There is an issue with ckeditor on mobile devices. Text selection isn't possible on mobile. The editor works fine on other devices.
+        Also use image width < 300 to avoid sizing problems on phones.
+        </p>
 
         <textarea name="content" id="content" cols="30" rows="10" class="form-control inputs border p-3" placeholder="write your post here" required></textarea>
         </div>
@@ -101,9 +103,6 @@ Add new post
     CKEDITOR.replace('content');
     CKEDITOR.config.width="100%";
     CKEDITOR.config.height="400px";
-    CKEDITOR.config.extraPlugins = "imageresize";
-    CKEDITOR.config.imageResize.maxWidth = 400;
-    CKEDITOR.config.imageResize.maxHeight = 400;
 </script>
 
 
