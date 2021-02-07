@@ -124,7 +124,7 @@ Django Blog
     {% for cat in menu|slice:"10" %}
         <a class="dropdown-item text-info " href="{% url 'filter' cat.name %}">{{ cat.name|title }}</a>
     {% endfor %}
-    <div class="text-muted small pl-4">To view all categories, click on the Categories button on the navbar.</div>
+    <div class="text-muted small pl-4 mb-2">To view all categories, click on the Categories button on the navbar.</div>
     </div>
     
 

@@ -152,12 +152,12 @@ a.links i:hover {
 }
 
 .main-body {
-  /* width: fit-content; */
+  width: fit-content;
 }
 
 .info {
   font-size: 0.7rem;
-  line-height: 0.6;
+  /* line-height: 0.6; */
 }
 
 @media (max-width: 726px) {
