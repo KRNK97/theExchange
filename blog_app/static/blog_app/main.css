@@ -152,7 +152,7 @@ a.links i:hover {
 }
 
 .main-body {
-  width: fit-content;
+  width: 100%;
 }
 
 .info {
