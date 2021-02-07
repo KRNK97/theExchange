@@ -139,7 +139,7 @@ a.links i {
 }
 
 .footer {
-  position: fixed;
+  position: absolute;
   border: 0;
   left: 0;
 }
@@ -229,9 +229,5 @@ a.links i:hover {
   }
 
   a.navbar-links {
-  }
-
-  .richtext {
-    display: none;
   }
 }

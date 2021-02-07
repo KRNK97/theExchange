@@ -22,7 +22,7 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=125)
     # content = models.TextField()
-    content = RichTextField(blank=True, null=True)
+    content = RichTextField(blank=False, null=False)
     date = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
