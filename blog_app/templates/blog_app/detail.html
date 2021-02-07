@@ -7,7 +7,7 @@
 {% block content %}
 <h2 class="h6 text-sm-right text-center mt-4 author mx-2 text-muted">{{ post.author.username }}'s post</h2>
 
-    <div class="p-3 m-2 bg-light border border-info shadow rounded main-body">
+    <div class="p-2 m-2 bg-light border border-info shadow rounded main-body">
         <span class="h1 title2">{{ post.title|upper }}</span>
         <span class="small ml-2 text-info">in <b><a href="{% url 'filter' post.category %}" class="text-decoration-none text-reset">[{{ post.category }}]</a></b></span>
         <br>
