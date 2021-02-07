@@ -230,4 +230,8 @@ a.links i:hover {
 
   a.navbar-links {
   }
+
+  .richtext {
+    display: none;
+  }
 }
