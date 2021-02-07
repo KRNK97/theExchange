@@ -100,7 +100,10 @@ Add new post
 <script>
     CKEDITOR.replace('content');
     CKEDITOR.config.width="100%";
-    CKEDITOR.config.height="400px"
+    CKEDITOR.config.height="400px";
+    CKEDITOR.config.extraPlugins = "imageresize";
+    CKEDITOR.config.imageResize.maxWidth = 400;
+    CKEDITOR.config.imageResize.maxHeight = 400;
 </script>
 
 
