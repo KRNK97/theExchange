@@ -17,4 +17,4 @@ This is a blogging site developed with Django. The blog features-
 
 ### Deployment/ Working link
 
-- The app is deployed at -
+- The app is deployed at - [theexchange](https://theexchange.herokuapp.com/)
