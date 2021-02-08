@@ -1,3 +1,20 @@
-# the Exchange (Blog)
+# the Exchange (Django based blog)
 
-The Exchange is a blogging web-app developed using the Django framework. The application features user registeration, authentication, posts crud, updating user data, likes and comments.
+This is a blogging site developed with Django. The blog features-
+
+- User Authentication ( Login, Logout, Registeration )
+- CRUD operations on posts
+- Updating user accounts
+- Post likes & comments
+
+### Packages/ Technologies Used
+
+- Python as the language
+- Django as the frame work
+- Html, css , js, Bootstrap for front-end
+- Postgres as db on heroku
+- Heroku for deployment
+
+### Deployment/ Working link
+
+- The app is deployed at -
